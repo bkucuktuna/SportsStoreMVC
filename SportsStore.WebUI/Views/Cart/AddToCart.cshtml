@@ -1,0 +1,23 @@
+﻿@using SportsStore.Domain.Entities
+@using SportsStore.WebUI.HTMLHelpers
+@using SportsStore.WebUI.Models;
+
+@model CartItems
+
+Shopping cart view
+@{ 
+    int keyCount= Request.Form.Keys.Count;
+    string productId = Request.Form["productId"];
+   <div>Count: @keyCount</div>
+    <div>productId: @productId</div>
+    foreach (var item in Request.Form.Keys)
+   {
+    <div>@item</div>   
+   }
+
+    foreach (var item in Model.Products)
+    {
+        <div>@item.ProductID</div>
+    }
+   
+   }

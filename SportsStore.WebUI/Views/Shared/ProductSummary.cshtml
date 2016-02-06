@@ -1,0 +1,18 @@
+﻿@model SportsStore.Domain.Entities.Product
+
+<form action="/Cart/AddToCart" method="post">
+    <div class="well">
+        <h3>
+            <strong>@Model.Name</strong>
+            <span class="pull-right btn-primary">@Model.Price</span>
+        </h3>
+        <span class="lead">@Model.Description</span>
+        <input type="hidden" value="@Model.ProductID" name="productId">
+        <button class="btn-success pull-right" type="submit">Add to cart</button>
+    </div>
+</form>
+
+<form action="/Cart/AddToCart" method="post">
+    <input type="text" name="test" />
+    <button type="submit">Submit Test</button>
+</form>
