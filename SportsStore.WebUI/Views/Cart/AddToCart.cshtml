@@ -6,18 +6,36 @@
 
 Shopping cart view
 @{ 
-    int keyCount= Request.Form.Keys.Count;
+    int keyCount = Request.Form.Keys.Count;
     string productId = Request.Form["productId"];
    <div>Count: @keyCount</div>
     <div>productId: @productId</div>
     foreach (var item in Request.Form.Keys)
-   {
-    <div>@item</div>   
-   }
-
-    foreach (var item in Model.Products)
     {
-        <div>@item.ProductID</div>
+    <div>@item</div>
     }
-   
-   }
+<div>Request.URL: @Request.Url</div>
+<div>Request.UrlReferrer: @Request.UrlReferrer</div>
+
+}
+
+    <table class="table" style="border:thick" >
+        <tr>
+            <td align="center">ProductID</td>
+            <td align="center">Item</td>
+            <td align="center">Price</td>
+        </tr>
+
+
+         @foreach (var item in Model.Products)
+         {
+                <tr>
+                    <td class="text-center" align="center">@item.ProductID</td>
+                    <td class="text-center" align="center">@item.Name</td>
+                    <td class="text-right" align="center">@item.Price</td>
+                </tr>
+         }
+
+    </table>
+    
+   <a href="@Request.UrlReferrer" class="btn btn-primary">Continue Shopping</a>
