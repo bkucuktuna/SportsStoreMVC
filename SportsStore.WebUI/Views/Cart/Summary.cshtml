@@ -1,0 +1,10 @@
+﻿@using SportsStore.WebUI.Models
+@model SportsStore.WebUI.Models.CartItems
+    <div>
+        "Your Cart: " @Model.LineItems.Sum(c=>c.product.Price*c.quantity)
+@{
+ Model.LineItems.Sum(c => c.product.Price * c.quantity).ToString();
+}
+
+
+    </div>

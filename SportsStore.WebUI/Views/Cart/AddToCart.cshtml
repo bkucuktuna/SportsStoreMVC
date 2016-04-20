@@ -24,18 +24,28 @@ Shopping cart view
             <td align="center">ProductID</td>
             <td align="center">Item</td>
             <td align="center">Price</td>
+            <td align="center">Quantity</td>
+            <td align="center">Subtotal</td>
         </tr>
 
 
-         @foreach (var item in Model.Products)
+         @foreach (var item in Model.LineItems)
          {
                 <tr>
-                    <td class="text-center" align="center">@item.ProductID</td>
-                    <td class="text-center" align="center">@item.Name</td>
-                    <td class="text-right" align="center">@item.Price</td>
+                    <td class="text-center" align="center">@item.product.ProductID</td>
+                    <td class="text-center" align="center">@item.product.Name</td>
+                    <td class="text-right" align="center">@item.product.Price</td>
+                    <td class="text-right" align="center">@item.quantity</td>
+                    <td class="text-right" align="center">@(item.quantity*item.product.Price)</td>
+                    <td class="text-right" align="center"><form action="/Cart/RemoveFromCart" method="post"><input type="hidden" name="ProductId" value=@item.product.ProductID /><input type="submit" value="Remove" /></form></td>
                 </tr>
          }
+         
+            <tr>
+                <td align="center">Total</td>
+            <td class="text-right" colspan="4" align="center">@Model.LineItems.Sum(li=>li.quantity*li.product.Price)</td>
+         </tr>
 
     </table>
     
-   <a href="@Request.UrlReferrer" class="btn btn-primary">Continue Shopping</a>
+   <a href="@Model.ReturnURL" class="btn btn-primary">Continue Shopping</a>

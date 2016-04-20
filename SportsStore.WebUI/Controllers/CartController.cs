@@ -15,22 +15,26 @@ namespace SportsStore.WebUI.Controllers
         public CartController(IProductRepository rep) { repositoryCart = rep; }
 
         // GET: ShoppingCart
-        public ActionResult AddToCart(int productId)
+        public ActionResult AddToCart(CartItems cartItems, int productId)
+        {
+            //cartItems.AddToCart( repositoryCart.Products.Where(p => p.ProductID == productId).First());
+            
+            Product product = repositoryCart.Products.Where(p => p.ProductID == productId).First();
+            cartItems.AddToCart(product);
+            cartItems.ReturnURL = Request.UrlReferrer.ToString();
+            return View(cartItems);
+        }
+        public ActionResult RemoveFromCart(CartItems cartItems, int productId)
         {
             //cartItems.AddToCart( repositoryCart.Products.Where(p => p.ProductID == productId).First());
             Product product = repositoryCart.Products.Where(p => p.ProductID == productId).First();
-            CartItems cartItems = (CartItems)Session["cart"];
-            if (Session["cart"]==null)
-            {
-                cartItems = new CartItems();
-                cartItems.AddToCart(product);
-                Session["cart"] = cartItems;
-            }
-            else
-            {
-                cartItems.AddToCart(product);
-            }
-            return View(cartItems);
+            cartItems.RemoveFromCart(product);
+            return View("AddToCart",cartItems);
         }
+        public PartialViewResult Summary(CartItems cartItems)
+        {
+            return PartialView(cartItems);
+        }
+
     }
 }

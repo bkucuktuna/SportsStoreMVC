@@ -9,11 +9,42 @@ namespace SportsStore.WebUI.Models
 {
     public class CartItems
     {
-        private List<Product> products = new List<Product>();
-        public void AddToCart(Product p) { products.Add(p); }
-        public IEnumerable<Product> Products
+        private List<CartLine> lineItems = new List<CartLine>();
+        public void AddToCart(Product p)
         {
-            get { return products; }
+            if (lineItems.Find(li=>li.product.ProductID==p.ProductID)!=null)
+            {
+                CartLine cartLine = lineItems.Find(li => li.product.ProductID == p.ProductID);
+                cartLine.quantity += 1;
+            }
+            else
+            {
+                CartLine cartLine = new CartLine();
+                cartLine.product = p;
+                cartLine.quantity = 1;
+                lineItems.Add(cartLine);
+            }
         }
+        public void RemoveFromCart(Product p)
+        {
+            if (lineItems.Find(li => li.product.ProductID == p.ProductID) != null)
+            {
+                
+                CartLine cartLine = lineItems.Find(li => li.product.ProductID == p.ProductID);
+                lineItems.Remove(cartLine);
+            }
+            else
+            {
+                //CartLine cartLine = new CartLine();
+                //cartLine.product = p;
+                //cartLine.quantity = 1;
+                //lineItems.Add(cartLine);
+            }
+        }
+        public IEnumerable<CartLine> LineItems
+        {
+            get { return lineItems; }
+        }
+        public string ReturnURL;
     }
 }
